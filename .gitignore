@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+cron.log
+openclaw_data/
+__pycache__/
