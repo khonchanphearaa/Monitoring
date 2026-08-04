@@ -43,7 +43,7 @@ def send_alerts(reason):
         try:
             tg_resp = requests.post(telegram_url, json=tg_payload, timeout=5)
             tg_resp.raise_for_status()
-            print(f"Direct Telegram alert sent successfully: {reason}")
+            print(f"Direct Telegram alert sent successed: {reason}")
         except Exception as e:
             print("Failed to send direct Telegram notification:", e)
 
