@@ -8,29 +8,44 @@ def send_alerts(reason):
     msg = f"[Server Alert - {timestamp}] {reason}"
 
     # Send chat notification to Telegram via OpenClaw
-    openclaw_payload = {
-        "message": msg,
-        "name": "DeploymentMonitoring",
-        "deliver": True,
-        "channel": "telegram"
-    }
+    if Config.OPENCLAW_WEBHOOK_URL and Config.OPENCLAW_HOOK_TOKEN:
+        openclaw_payload = {
+            "message": msg,
+            "name": "DeploymentMonitoring",
+            "deliver": True,
+            "channel": "telegram"
+        }
 
-    headers = {
-        "Authorization": f"Bearer {Config.OPENCLAW_HOOK_TOKEN}",
-        "Content-Type": "application/json"
-    }
-    
-    try:
-        response = requests.post(
-            Config.OPENCLAW_WEBHOOK_URL,
-            json=openclaw_payload,
-            headers=headers,
-            timeout=5
-        )
-        response.raise_for_status()
-        print(f"Chat alert sent to Telegram successed: {reason}")
-    except Exception as e:
-        print("Failed to send OpenClaw notification:", e)
+        headers = {
+            "Authorization": f"Bearer {Config.OPENCLAW_HOOK_TOKEN}",
+            "Content-Type": "application/json"
+        }
+        
+        try:
+            response = requests.post(
+                Config.OPENCLAW_WEBHOOK_URL,
+                json=openclaw_payload,
+                headers=headers,
+                timeout=5
+            )
+            response.raise_for_status()
+            print(f"Chat alert sent to OpenClaw successfully: {reason}")
+        except Exception as e:
+            print("Failed to send OpenClaw notification:", e)
+
+    # Direct Telegram Bot API fallback delivery
+    if Config.TELEGRAM_BOT_TOKEN and Config.TELEGRAM_CHAT_ID:
+        telegram_url = f"https://api.telegram.org/bot{Config.TELEGRAM_BOT_TOKEN}/sendMessage"
+        tg_payload = {
+            "chat_id": Config.TELEGRAM_CHAT_ID,
+            "text": msg
+        }
+        try:
+            tg_resp = requests.post(telegram_url, json=tg_payload, timeout=5)
+            tg_resp.raise_for_status()
+            print(f"Direct Telegram alert sent successfully: {reason}")
+        except Exception as e:
+            print("Failed to send direct Telegram notification:", e)
 
     # Physical alert on home smart light / plug
     light_payload = {
