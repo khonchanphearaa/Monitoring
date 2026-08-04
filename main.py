@@ -33,7 +33,7 @@ def send_alerts(reason):
         except Exception as e:
             print("Failed to send OpenClaw notification:", e)
 
-    # Direct Telegram Bot API fallback delivery
+    # Direct Telegram Bot API fallback
     if Config.TELEGRAM_BOT_TOKEN and Config.TELEGRAM_CHAT_ID:
         telegram_url = f"https://api.telegram.org/bot{Config.TELEGRAM_BOT_TOKEN}/sendMessage"
         tg_payload = {
