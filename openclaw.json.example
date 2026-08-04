@@ -1,0 +1,18 @@
+{
+  "gateway": {
+    "port": 18789,
+    "bind": "lan"
+  },
+  "hooks": {
+    "enabled": true,
+    "token": "init-setup-openclaw-2026",
+    "path": "/hooks"
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "YOUR_TELEGRAM_BOT_TOKEN",
+      "chatId": "YOUR_TELEGRAM_CHAT_ID"
+    }
+  }
+}
