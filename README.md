@@ -6,31 +6,7 @@ A self-hosted, lightweight monitoring daemon for Ubuntu Mini PC servers. It auto
 
 ## Architecture & System Overview
 
-```
-                                  ┌───────────────────────────┐
-                                  │      Cron Scheduler       │
-                                  │ (Executes every 5 mins)   │
-                                  └─────────────┬─────────────┘
-                                                │
-                                                ▼
-                                  ┌───────────────────────────┐
-                                  │  Python Daemon (main.py)  │
-                                  │  Check GitHub Runner Svc │
-                                  └─────────────┬─────────────┘
-                                                │ (Anomalies Detected)
-                                 ┌──────────────┴──────────────┐
-                                 │                             │
-                                 ▼                             ▼
-                  ┌─────────────────────────────┐  ┌──────────────────────────┐
-                  │ OpenClaw Gateway Container  │  │ Smart Light / Plug API   │
-                  │ (HTTP POST Port 18789)     │  │ (Physical Visual Alert) │
-                  └──────────────┬──────────────┘  └──────────────────────────┘
-                                 │
-                                 ▼
-                  ┌─────────────────────────────┐
-                  │      Telegram Bot Alert     │
-                  └─────────────────────────────┘
-```
+<img src="./assests/images/Architectures.png">
 
 ### Components
 
